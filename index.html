@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maharashtra Graphics — Audio &amp; Video Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --saffron:    #C8520A;
+      --saffron2:   #E07020;
+      --gold:       #B8841E;
+      --gold-lt:    #D4A84A;
+      --gold-glow:  #E8C070;
+      --cream:      #F5EDD8;
+      --brown-dk:   #100500;
+      --brown-md:   #2E0E00;
+      --brown-lt:   #5C2200;
+      --text-lt:    #F0E4CC;
+      --text-md:    rgba(235,210,165,.78);
+      --text-dim:   rgba(195,160,110,.52);
+      --card-bg:    #FEFAF2;
+      --input-bg:   #FAF5EA;
+      --border:     #E5D8BC;
+      --tab-bg:     #F0E8D0;
+      --muted:      #7A6645;
+      --success:    #2A6E38;
+      --error:      #B01A0A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--brown-dk);
+      color: var(--text-lt);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Background: layered warm atmosphere ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 70% at 20% 50%,
+          rgba(160,70,8,.22) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 80%,
+          rgba(110,40,4,.2) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 25% at 90% 8%,
+          rgba(180,132,30,.1) 0%, transparent 50%),
+        linear-gradient(158deg, #1A0800 0%, #0E0400 40%, #130600 100%);
+    }
+    /* Diagonal geometric overlay — fort stonework pattern */
+    .bg-layer::after {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: .038;
+      background-image:
+        repeating-linear-gradient(45deg,
+          rgba(180,132,30,1) 0, rgba(180,132,30,1) 1px,
+          transparent 1px, transparent 52px),
+        repeating-linear-gradient(-45deg,
+          rgba(180,132,30,1) 0, rgba(180,132,30,1) 1px,
+          transparent 1px, transparent 52px);
+    }
+
+    /* ══════════════════════════════
+       TOP NAV
+    ══════════════════════════════ */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 400;
+      height: 62px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 44px;
+      background: rgba(10,3,0,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(180,132,30,.14);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .brand-logo {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--brown-md), var(--brown-lt));
+      border: 1.5px solid rgba(180,132,30,.42);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .88rem; font-weight: 700;
+      color: var(--gold-lt); letter-spacing: 1px; flex-shrink: 0;
+    }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .95rem; font-weight: 700;
+      color: var(--gold-lt); line-height: 1.1; letter-spacing: .3px;
+    }
+    .brand-tagline {
+      font-size: .6rem; font-weight: 500;
+      color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
+    }
+    .topbar-nav { display: flex; align-items: center; gap: 26px; }
+    .topbar-nav a {
+      color: var(--text-dim); font-size: .78rem; font-weight: 500;
+      text-decoration: none; letter-spacing: .3px; transition: color .2s;
+    }
+    .topbar-nav a:hover { color: var(--gold-lt); }
+    .nav-cta {
+      padding: 7px 18px;
+      background: linear-gradient(135deg, var(--brown-lt), var(--saffron)) !important;
+      color: #fff !important; border-radius: 8px; font-weight: 600 !important;
+      box-shadow: 0 2px 12px rgba(200,82,10,.32);
+      transition: box-shadow .2s, transform .15s !important;
+    }
+    .nav-cta:hover { box-shadow: 0 4px 18px rgba(200,82,10,.48) !important; transform: translateY(-1px); }
+
+    /* ══════════════════════════════
+       HERO — two-column, full viewport
+    ══════════════════════════════ */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh; padding-top: 62px;
+      display: flex; align-items: stretch;
+    }
+
+    /* Left panel */
+    .hero-left {
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 52px 72px 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 28px;
+    }
+    .eyebrow-bar {
+      width: 30px; height: 2px;
+      background: linear-gradient(90deg, var(--saffron), var(--gold));
+      border-radius: 2px;
+    }
+    .eyebrow-text {
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: 3.5px; text-transform: uppercase;
+      color: var(--saffron2);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      font-weight: 700; line-height: 1.16;
+      color: var(--cream); margin-bottom: 20px;
+    }
+    .hero-title em {
+      font-style: italic; color: var(--gold-glow);
+    }
+    .hero-title .devanagari {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: .62em; font-weight: 600;
+      color: var(--text-md); display: block;
+      margin-bottom: 4px; letter-spacing: .5px;
+    }
+
+    .hero-desc {
+      font-size: .91rem; line-height: 1.9;
+      color: var(--text-md); max-width: 400px;
+      margin-bottom: 40px;
+    }
+
+    /* Services pills */
+    .service-pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 44px;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: rgba(180,132,30,.1);
+      border: 1px solid rgba(180,132,30,.22);
+      border-radius: 50px;
+      font-size: .76rem; font-weight: 500;
+      color: var(--gold-lt); letter-spacing: .3px;
+      transition: border-color .2s, background .2s;
+    }
+    .pill:hover {
+      border-color: rgba(200,82,10,.4);
+      background: rgba(200,82,10,.12);
+    }
+    .pill-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--saffron2); flex-shrink: 0;
+    }
+
+    /* Stats */
+    .stat-row { display: flex; gap: 36px; flex-wrap: wrap; }
+    .stat-item { display: flex; flex-direction: column; gap: 3px; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--gold-glow); line-height: 1;
+    }
+    .stat-label {
+      font-size: .69rem; font-weight: 600;
+      color: var(--text-dim); letter-spacing: 1.2px; text-transform: uppercase;
+    }
+
+    /* Vertical rule */
+    .hero-rule {
+      width: 1px; flex-shrink: 0; align-self: stretch; margin: 80px 0;
+      background: linear-gradient(to bottom,
+        transparent, rgba(180,132,30,.22) 20%, rgba(180,132,30,.22) 80%, transparent);
+    }
+
+    /* Right panel — login */
+    .hero-right {
+      width: 470px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 52px 40px 28px;
+    }
+
+    /* ══════════════════════════════
+       LOGIN CARD
+    ══════════════════════════════ */
+    .card {
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 22px;
+      box-shadow:
+        0 0 0 1px rgba(180,132,30,.14),
+        0 4px 8px rgba(0,0,0,.12),
+        0 24px 64px rgba(0,0,0,.6);
+      overflow: hidden;
+      animation: cardIn .6s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(22px) scale(.975); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .card-header {
+      padding: 26px 26px 20px;
+      background: linear-gradient(140deg,
+        #0E0400 0%, #2A0C00 50%, #3E1600 100%);
+      text-align: center; position: relative;
+      border-bottom: 1px solid rgba(180,132,30,.16);
+    }
+    .card-header::after {
+      content: '';
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 16px; background: var(--card-bg);
+      border-radius: 50% 50% 0 0 / 16px 16px 0 0;
+    }
+
+    /* Online indicator badge */
+    .online-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 10px;
+      background: rgba(42,110,56,.25);
+      border: 1px solid rgba(42,110,56,.4);
+      border-radius: 50px;
+      font-size: .62rem; font-weight: 600;
+      color: #6ED48A; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .online-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4CD46A;
+      box-shadow: 0 0 6px #4CD46A;
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+    @keyframes pulse-green {
+      0%,100% { opacity: 1; } 50% { opacity: .4; }
+    }
+
+    .card-logo-wrap {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px;
+      background: rgba(180,132,30,.1);
+      border: 1.5px solid rgba(180,132,30,.3);
+      border-radius: 14px; margin-bottom: 10px;
+    }
+    .card-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--gold-glow); letter-spacing: .3px; line-height: 1.2;
+    }
+    .card-sub {
+      font-size: .61rem; font-weight: 500;
+      color: rgba(195,160,110,.5);
+      letter-spacing: 2.5px; text-transform: uppercase; margin-top: 4px;
+    }
+
+    .card-body { padding: 16px 24px 26px; }
+
+    /* Tabs */
+    .tabs {
+      display: flex; background: var(--tab-bg);
+      border-radius: 10px; padding: 4px;
+      margin-bottom: 18px; border: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1; padding: 8px; border: none; background: transparent;
+      border-radius: 7px; font-family: 'DM Sans', sans-serif;
+      font-size: .81rem; font-weight: 500; color: var(--muted);
+      cursor: pointer; transition: all .2s;
+    }
+    .tab-btn.active {
+      background: var(--brown-dk); color: var(--gold-lt);
+      box-shadow: 0 2px 8px rgba(0,0,0,.35); font-weight: 600;
+    }
+
+    /* Fields */
+    .field { margin-bottom: 11px; }
+    .field label {
+      display: block; font-size: .72rem; font-weight: 600;
+      color: #3A2A10; margin-bottom: 4px; letter-spacing: .2px;
+    }
+    .field input {
+      width: 100%; padding: 9px 13px;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 9px; font-family: 'DM Sans', sans-serif;
+      font-size: .845rem; color: #2A1A05; outline: none;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .field input:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(200,82,10,.1);
+      background: #fff;
+    }
+    .field input::placeholder { color: #B0A080; }
+
+    .forgot-row {
+      display: flex; justify-content: flex-end;
+      margin: -4px 0 12px;
+    }
+    .forgot-link {
+      font-size: .73rem; font-weight: 500; color: var(--saffron);
+      background: none; border: none; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: color .2s;
+    }
+    .forgot-link:hover { color: var(--brown-lt); text-decoration: underline; }
+
+    .btn-primary {
+      width: 100%; padding: 11px;
+      background: linear-gradient(135deg, var(--brown-md) 0%, var(--saffron) 100%);
+      color: #fff; border: none; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: .87rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 8px;
+      box-shadow: 0 3px 16px rgba(200,82,10,.42);
+      transition: transform .14s, box-shadow .2s; margin-top: 2px;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px); box-shadow: 0 6px 22px rgba(200,82,10,.55);
+    }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+
+    .form-divider {
+      display: flex; align-items: center; gap: 10px;
+      margin: 13px 0; color: var(--muted); font-size: .73rem;
+    }
+    .form-divider::before, .form-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .btn-google {
+      width: 100%; padding: 9px; background: #fff;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: .845rem; font-weight: 500;
+      color: #3A2A10; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .btn-google:hover {
+      border-color: #4285F4; box-shadow: 0 2px 10px rgba(66,133,244,.18);
+    }
+    .google-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Upload progress (for future Storage use) */
+    .upload-row {
+      margin-top: 8px; display: none;
+    }
+    .upload-bar {
+      width: 100%; height: 4px;
+      background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .upload-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--saffron), var(--gold));
+      border-radius: 2px; transition: width .3s;
+    }
+    .upload-label {
+      font-size: .68rem; color: var(--muted); margin-top: 4px;
+      text-align: right;
+    }
+
+    .hidden { display: none !important; }
+    .spinner {
+      width: 13px; height: 13px;
+      border: 2px solid rgba(255,255,255,.35); border-top-color: #fff;
+      border-radius: 50%; display: inline-block;
+      animation: spin .6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #180800; color: var(--cream);
+      padding: 11px 24px; border-radius: 50px;
+      font-size: .81rem; font-weight: 500;
+      box-shadow: 0 6px 30px rgba(0,0,0,.45);
+      z-index: 9999;
+      transition: transform .32s cubic-bezier(.22,1,.36,1);
+      border-left: 3px solid var(--error);
+      max-width: 90vw; text-align: center;
+    }
+    .toast.show   { transform: translateX(-50%) translateY(0); }
+    .toast.success { border-left-color: var(--success); }
+
+    /* ══════════════════════════════
+       BELOW-FOLD SECTIONS
+    ══════════════════════════════ */
+    .section-outer {
+      position: relative; z-index: 1;
+    }
+    .sec-inner {
+      max-width: 1160px; margin: 0 auto;
+      padding: 90px 72px;
+    }
+    .full-rule {
+      position: relative; z-index: 1;
+      height: 1px; margin: 0 72px;
+      background: linear-gradient(90deg,
+        transparent, rgba(180,132,30,.18) 20%,
+        rgba(180,132,30,.18) 80%, transparent);
+    }
+
+    .sec-eyebrow {
+      font-size: .66rem; font-weight: 700;
+      letter-spacing: 3.5px; text-transform: uppercase;
+      color: var(--saffron2); margin-bottom: 10px;
+    }
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+      font-weight: 700; color: var(--cream); line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .sec-title em { font-style: italic; color: var(--gold-glow); }
+    .sec-bar {
+      width: 44px; height: 3px;
+      background: linear-gradient(90deg, var(--saffron), var(--gold));
+      border-radius: 2px; margin-bottom: 18px;
+    }
+    .sec-desc {
+      color: var(--text-md); font-size: .89rem;
+      line-height: 1.88; max-width: 640px;
+    }
+
+    /* Services grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px; margin-top: 46px;
+    }
+    .svc-card {
+      background: rgba(255,255,255,.028);
+      border: 1px solid rgba(180,132,30,.1);
+      border-radius: 16px; padding: 26px 22px;
+      transition: border-color .22s, transform .22s, background .22s;
+      position: relative; overflow: hidden;
+    }
+    .svc-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--saffron), var(--gold));
+      opacity: 0; transition: opacity .25s;
+    }
+    .svc-card:hover {
+      border-color: rgba(200,82,10,.32);
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.042);
+    }
+    .svc-card:hover::before { opacity: 1; }
+    .svc-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: rgba(180,132,30,.1);
+      border: 1px solid rgba(180,132,30,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.35rem; margin-bottom: 16px;
+    }
+    .svc-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--gold-lt); margin-bottom: 8px;
+    }
+    .svc-card p {
+      color: var(--text-md); font-size: .81rem; line-height: 1.78;
+    }
+
+    /* Process timeline */
+    .process-row {
+      display: flex; gap: 0; margin-top: 48px;
+      position: relative;
+    }
+    .process-row::before {
+      content: '';
+      position: absolute;
+      top: 22px; left: 22px;
+      right: 22px; height: 1px;
+      background: linear-gradient(90deg,
+        transparent, rgba(180,132,30,.3) 15%,
+        rgba(180,132,30,.3) 85%, transparent);
+    }
+    .process-step {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; text-align: center; gap: 12px;
+      padding: 0 10px;
+    }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--brown-md), var(--brown-lt));
+      border: 1.5px solid rgba(180,132,30,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 700; color: var(--gold-lt);
+      position: relative; z-index: 1;
+    }
+    .step-title {
+      font-size: .78rem; font-weight: 600;
+      color: var(--cream); letter-spacing: .3px;
+    }
+    .step-desc {
+      font-size: .73rem; color: var(--text-dim); line-height: 1.65;
+    }
+
+    /* FAQ */
+    .faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      background: rgba(255,255,255,.028);
+      border: 1px solid rgba(180,132,30,.1);
+      border-radius: 12px; overflow: hidden;
+      transition: border-color .2s;
+    }
+    .faq-item:hover { border-color: rgba(200,82,10,.28); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 20px; cursor: pointer;
+      color: var(--cream); font-size: .87rem; font-weight: 500; gap: 12px;
+    }
+    .faq-icon {
+      width: 24px; height: 24px; flex-shrink: 0;
+      background: rgba(200,82,10,.16); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--saffron2); font-size: 1rem; font-weight: 700;
+    }
+    .faq-body {
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height .35s ease, opacity .3s;
+      padding: 0 20px;
+      color: var(--text-md); font-size: .83rem; line-height: 1.88;
+    }
+
+    /* Footer */
+    footer {
+      position: relative; z-index: 1;
+      background: rgba(6,1,0,.92);
+      border-top: 1px solid rgba(180,132,30,.1);
+      padding: 60px 72px 28px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.7fr repeat(3, 1fr);
+      gap: 40px; margin-bottom: 44px;
+    }
+    .footer-brand h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--gold-glow); margin-bottom: 10px;
+    }
+    .footer-brand p {
+      font-size: .79rem; line-height: 1.88; color: var(--text-dim);
+    }
+    .footer-col h4 {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(180,132,30,.45); margin-bottom: 15px;
+    }
+    .footer-col p, .footer-col address {
+      font-size: .79rem; line-height: 1.92; font-style: normal; color: var(--text-dim);
+    }
+    .footer-col a { color: var(--text-dim); text-decoration: none; transition: color .2s; }
+    .footer-col a:hover { color: var(--gold-glow); }
+    .footer-rule { height: 1px; background: rgba(180,132,30,.08); margin-bottom: 20px; }
+    .footer-bottom {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .footer-bottom p { font-size: .7rem; color: rgba(155,120,75,.38); line-height: 1.78; }
+    .legal-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .legal-links a {
+      font-size: .69rem; color: rgba(155,120,75,.38); text-decoration: none; transition: color .2s;
+    }
+    .legal-links a:hover { color: var(--gold-glow); }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero { flex-direction: column; }
+      .hero-left { padding: 52px 28px 32px; }
+      .hero-rule { display: none; }
+      .hero-right { width: 100%; padding: 0 24px 52px; }
+      .sec-inner { padding: 64px 28px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 48px 28px 24px; }
+      .topbar { padding: 0 20px; }
+      .full-rule { margin: 0 28px; }
+      .topbar-nav .nav-hide { display: none; }
+      .process-row { flex-direction: column; gap: 20px; }
+      .process-row::before { display: none; }
+      .process-step { flex-direction: row; text-align: left; align-items: flex-start; }
+      .step-num { flex-shrink: 0; }
+    }
+    @media (max-width: 560px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .stat-row { gap: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+
+<!-- ══ TOPBAR ══ -->
+<nav class="topbar">
+  <a class="topbar-brand" href="#">
+    <div class="brand-logo">MG</div>
+    <div class="brand-text">
+      <span class="brand-name">Maharashtra Graphics</span>
+      <span class="brand-tagline">Audio · Video Production</span>
+    </div>
+  </a>
+  <div class="topbar-nav">
+    <a href="#services" class="nav-hide">Services</a>
+    <a href="#process" class="nav-hide">Process</a>
+    <a href="#faq" class="nav-hide">FAQ</a>
+    <a href="#contact" class="nav-hide">Contact</a>
+    <a href="#" class="nav-cta"
+       onclick="document.querySelector('.hero-right').scrollIntoView({behavior:'smooth'});return false;">
+      Login
+    </a>
+  </div>
+</nav>
+
+<!-- ══ HERO (login always visible at top) ══ -->
+<section class="hero">
+
+  <!-- LEFT: Company Info -->
+  <div class="hero-left">
+    <div class="eyebrow">
+      <div class="eyebrow-bar"></div>
+      <span class="eyebrow-text">Thane, Maharashtra · Est. 2018</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="devanagari">महाराष्ट्र ग्राफिक्स</span>
+      Professional<br/>
+      <em>Audio &amp; Video</em><br/>
+      Production Studio
+    </h1>
+
+    <p class="hero-desc">
+      PUNE–Thane च्या मध्यभागी वसलेलं एक premium creative studio.
+      आपल्या brand साठी high-quality audio tracks, cinematic videos,
+      आणि professional content — एकाच छताखाली.
+    </p>
+
+    <div class="service-pills">
+      <span class="pill"><span class="pill-dot"></span>Audio Production</span>
+      <span class="pill"><span class="pill-dot"></span>Video Editing</span>
+      <span class="pill"><span class="pill-dot"></span>Jingles &amp; BGM</span>
+      <span class="pill"><span class="pill-dot"></span>Corporate Films</span>
+      <span class="pill"><span class="pill-dot"></span>Reels &amp; Shorts</span>
+      <span class="pill"><span class="pill-dot"></span>Voice-Over</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="stat-num">3000+</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">7+</span>
+        <span class="stat-label">Years</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">50+</span>
+        <span class="stat-label">Artists</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4K</span>
+        <span class="stat-label">Max Resolution</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-rule"></div>
+
+  <!-- RIGHT: Login Card -->
+  <div class="hero-right">
+    <div class="card">
+
+      <div class="card-header">
+        <div class="online-badge">
+          <span class="online-dot"></span> Portal Active
+        </div>
+        <div>
+          <div class="card-logo-wrap">
+            <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="16" width="48" height="7" rx="3.5"
+                fill="rgba(212,168,74,.22)" stroke="rgba(212,168,74,.4)" stroke-width="1.3"/>
+              <rect x="13" y="22" width="38" height="22" rx="3.5"
+                fill="rgba(212,168,74,.07)" stroke="rgba(212,168,74,.35)" stroke-width="1.3"/>
+              <rect x="8" y="42" width="48" height="7" rx="3.5"
+                fill="rgba(212,168,74,.22)" stroke="rgba(212,168,74,.4)" stroke-width="1.3"/>
+              <text x="32" y="38" text-anchor="middle"
+                font-family="Cormorant Garamond,serif" font-weight="700"
+                font-size="11" fill="#D4A84A" letter-spacing="1.5">MG</text>
+            </svg>
+          </div>
+          <div class="card-brand">Maharashtra Graphics</div>
+          <div class="card-sub">Private Limited · Thane</div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="tabs">
+          <button class="tab-btn active" id="tab-login"
+            onclick="switchTab('login')">Login</button>
+          <button class="tab-btn" id="tab-register"
+            onclick="switchTab('register')">New Account</button>
+        </div>
+
+        <!-- LOGIN -->
+        <div id="login-form">
+          <div class="field">
+            <label>Email / Mobile / WhatsApp</label>
+            <input id="l-id" type="text"
+              placeholder="email@example.com  या  9876543210"/>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input id="l-pass" type="password" placeholder="••••••••"
+              onkeydown="if(event.key==='Enter') doLogin()"/>
+          </div>
+          <div class="forgot-row">
+            <button class="forgot-link" onclick="doForgot()">Forgot Password?</button>
+          </div>
+          <button class="btn-primary" id="btn-login" onclick="doLogin()">
+            Login करें →
+          </button>
+          <div class="form-divider">या / OR</div>
+          <button class="btn-google" onclick="doGoogle()">
+            <svg class="google-icon" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.17 2.86l6.1-6.1C34.46 3.19 29.53 1 24 1 14.86 1 7.14 6.55 3.89 14.25l7.1 5.51C12.64 13.26 17.88 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.1 24.5c0-1.58-.14-3.1-.4-4.56H24v8.63h12.42c-.54 2.9-2.17 5.36-4.62 7.01l7.14 5.54C43.13 37.18 46.1 31.36 46.1 24.5z"/>
+              <path fill="#FBBC05" d="M10.99 28.24A14.6 14.6 0 0 1 9.5 24c0-1.47.25-2.88.69-4.24l-7.1-5.51A22.94 22.94 0 0 0 1 24c0 3.72.89 7.24 2.46 10.35l7.53-6.11z"/>
+              <path fill="#34A853" d="M24 47c5.53 0 10.17-1.83 13.56-4.98l-7.14-5.54c-1.83 1.23-4.17 1.96-6.42 1.96-6.12 0-11.36-3.76-13.01-9.2l-7.53 6.11C7.14 41.45 14.86 47 24 47z"/>
+            </svg>
+            Google से Login करें
+          </button>
+        </div>
+
+        <!-- REGISTER -->
+        <div id="register-form" class="hidden">
+          <div class="field">
+            <label>पूरा नाम / Full Name *</label>
+            <input id="r-name" type="text" placeholder="जैसे: Rahul Sharma"/>
+          </div>
+          <div class="field">
+            <label>Email ID *</label>
+            <input id="r-email" type="email" placeholder="rahul@example.com"/>
+          </div>
+          <div class="field">
+            <label>Mobile Number *</label>
+            <input id="r-mobile" type="tel" placeholder="9876543210" maxlength="10"/>
+          </div>
+          <div class="field">
+            <label>WhatsApp Number *</label>
+            <input id="r-whatsapp" type="tel" placeholder="9876543210" maxlength="10"/>
+          </div>
+          <div class="field">
+            <label>Password * (कम से कम 6 अक्षर)</label>
+            <input id="r-pass" type="password" placeholder="••••••••"/>
+          </div>
+          <button class="btn-primary" id="btn-register" onclick="doRegister()">
+            Account बनाएं →
+          </button>
+          <div class="form-divider">या / OR</div>
+          <button class="btn-google" onclick="doGoogle()">
+            <svg class="google-icon" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.17 2.86l6.1-6.1C34.46 3.19 29.53 1 24 1 14.86 1 7.14 6.55 3.89 14.25l7.1 5.51C12.64 13.26 17.88 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.1 24.5c0-1.58-.14-3.1-.4-4.56H24v8.63h12.42c-.54 2.9-2.17 5.36-4.62 7.01l7.14 5.54C43.13 37.18 46.1 31.36 46.1 24.5z"/>
+              <path fill="#FBBC05" d="M10.99 28.24A14.6 14.6 0 0 1 9.5 24c0-1.47.25-2.88.69-4.24l-7.1-5.51A22.94 22.94 0 0 0 1 24c0 3.72.89 7.24 2.46 10.35l7.53-6.11z"/>
+              <path fill="#34A853" d="M24 47c5.53 0 10.17-1.83 13.56-4.98l-7.14-5.54c-1.83 1.23-4.17 1.96-6.42 1.96-6.12 0-11.36-3.76-13.01-9.2l-7.53 6.11C7.14 41.45 14.86 47 24 47z"/>
+            </svg>
+            Google से Register करें
+          </button>
+        </div>
+
+      </div>
+    </div><!-- /card -->
+  </div><!-- /hero-right -->
+
+</section><!-- /hero -->
+
+
+<!-- ══ SERVICES ══ -->
+<div class="full-rule"></div>
+<div class="section-outer" id="services">
+  <div class="sec-inner">
+    <div class="sec-eyebrow">Our Services · आमच्या सेवा</div>
+    <div class="sec-title">Audio &amp; Video<br/><em>Production Services</em></div>
+    <div class="sec-bar"></div>
+    <p class="sec-desc">
+      Maharashtra Graphics हे एक full-service creative studio आहे.
+      Professional artists, state-of-the-art equipment, आणि
+      Maharashtra च्या समृद्ध सांस्कृतिक प्रेरणेतून — आम्ही आपल्या
+      brand साठी unforgettable audio-visual content तयार करतो.
+    </p>
+
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-icon">🎵</div>
+        <h3>Audio Production</h3>
+        <p>Brand jingles, background music, radio spots, podcast production — professional recording studio सह complete audio solutions.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🎬</div>
+        <h3>Video Production</h3>
+        <p>Corporate films, brand stories, product videos, event coverage — 4K cinematography आणि expert post-production.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">📱</div>
+        <h3>Reels &amp; Shorts</h3>
+        <p>Instagram Reels, YouTube Shorts, viral content — social media साठी optimized short-form video content.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🎙️</div>
+        <h3>Voice-Over &amp; Dubbing</h3>
+        <p>Marathi, Hindi, English — professional voice artists द्वारे IVR, ad spots, आणि documentary narration.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">✂️</div>
+        <h3>Editing &amp; VFX</h3>
+        <p>Color grading, motion graphics, VFX compositing — आपल्या footage ला cinematic quality देणे.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🎭</div>
+        <h3>Artist Management</h3>
+        <p>Marathi मधील 50+ professional artists — singers, voice actors, directors — एकाच platform वर.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ PROCESS ══ -->
+<div class="full-rule" id="process"></div>
+<div class="section-outer">
+  <div class="sec-inner">
+    <div class="sec-eyebrow">How It Works · प्रक्रिया</div>
+    <div class="sec-title">Simple <em>4-Step Process</em></div>
+    <div class="sec-bar"></div>
+    <p class="sec-desc">
+      Account बनवल्यापासून ते final delivery पर्यंत — आमची process पूर्णपणे transparent आणि efficient आहे.
+    </p>
+    <div class="process-row">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div>
+          <div class="step-title">Register &amp; Brief</div>
+          <div class="step-desc">Account बनवा आणि आपल्या project ची brief share करा.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div>
+          <div class="step-title">Artist Selection</div>
+          <div class="step-desc">आपल्या budget आणि genre नुसार artist निवडा.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div>
+          <div class="step-title">Production</div>
+          <div class="step-desc">Studio recording, shoot, आणि post-production — सर्व in-house.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div>
+          <div class="step-title">Delivery</div>
+          <div class="step-desc">Final files — dashboard वर download, review, आणि approve करा.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FAQ ══ -->
+<div class="full-rule" id="faq"></div>
+<div class="section-outer">
+  <div class="sec-inner">
+    <div class="sec-eyebrow">FAQ · वारंवार विचारले जाणारे प्रश्न</div>
+    <div class="sec-title">आपल्या <em>प्रश्नांची</em> उत्तरे</div>
+    <div class="sec-bar"></div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(1)">
+          Account कसे बनवायचे आणि Login कसे करायचे?
+          <span class="faq-icon" id="faq-icon-1">+</span>
+        </div>
+        <div class="faq-body" id="faq-1">
+          Page च्या top वर "New Account" tab निवडा. नाव, Email, Mobile, WhatsApp आणि Password भरा.
+          Login साठी Email, Mobile किंवा WhatsApp Number — कोणतेही वापरता येते. Google account ने देखील एका click मध्ये होते.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(2)">
+          माझा Data कुठे save होतो?
+          <span class="faq-icon" id="faq-icon-2">+</span>
+        </div>
+        <div class="faq-body" id="faq-2">
+          सर्व user data Google Firebase वर secure होतो — Firebase Authentication, Realtime Database, Firestore,
+          आणि Firebase Storage या सर्व services वापरल्या जातात. Google च्या enterprise-grade encryption नुसार आपला data सुरक्षित आहे.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(3)">
+          कोणत्या formats मध्ये delivery मिळते?
+          <span class="faq-icon" id="faq-icon-3">+</span>
+        </div>
+        <div class="faq-body" id="faq-3">
+          Audio: MP3, WAV, FLAC (up to 320kbps). Video: MP4, MOV (up to 4K/60fps).
+          Client च्या requirement नुसार custom formats देखील available आहेत.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(4)">
+          Turnaround time किती असतो?
+          <span class="faq-icon" id="faq-icon-4">+</span>
+        </div>
+        <div class="faq-body" id="faq-4">
+          Audio jingles: 12-24 house . Short videos/Reels: 5-7 days.
+          Corporate films: 10-15 days. Urgent delivery available — dashboard वर request करता येते.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(5)">
+          Contact कसा करायचा?
+          <span class="faq-icon" id="faq-icon-5">+</span>
+        </div>
+        <div class="faq-body" id="faq-5">
+          Panchsheel Nagar, Thane West येथे प्रत्यक्ष भेटा — सोमवार ते शनिवार, सकाळी 9 ते संध्याकाळी 8.
+          WhatsApp किंवा Email द्वारे देखील त्वरित प्रतिसाद मिळतो.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══ -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h2>Maharashtra Graphics Pvt. Ltd.</h2>
+      <p>
+        Thane, Maharashtra येथील एक premium Audio &amp; Video Production Studio.
+        Professional artists, cutting-edge technology, आणि Maharashtra च्या
+        सांस्कृतिक प्रेरणेतून — unforgettable content तयार करणे हेच आमचे ध्येय.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>📍 Address</h4>
+      <address>
+        Panchsheel Nagar,<br/>
+        Thane West, Thane,<br/>
+        Maharashtra — 400 601<br/>
+        India 🇮🇳
+      </address>
+    </div>
+    <div class="footer-col">
+      <h4>🏢 Company Info</h4>
+      <p>
+        <strong style="color:rgba(220,190,150,.72)">Maharashtra Graphics Private Limited</strong><br/>
+        Type: Private Limited Company<br/>
+        Sector: Audio &amp; Video Production<br/>
+        State: Maharashtra, India
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>⚖️ Legal</h4>
+      <p>
+        CIN: Registered under<br/>
+        Companies Act, 2013<br/>
+        GST Registered Entity<br/>
+        Compliant with IT Act, 2000<br/>
+        &amp; IT (Amendment) Act, 2008
+      </p>
+    </div>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-bottom">
+    <p>
+      © 2024–2025 Maharashtra Graphics Private Limited. All Rights Reserved.<br/>
+      Unauthorized reproduction strictly prohibited under Copyright Act, 1957 &amp; IT Act, 2000.
+    </p>
+    <div class="legal-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Digital Compliance</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- ══ FIREBASE — loaded last, after DOM ready ══ -->
+<script type="module">
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    GoogleAuthProvider, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getDatabase, ref as dbRef, set, get }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  import { getFirestore, doc, setDoc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getStorage, ref as storRef, uploadString, getDownloadURL }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+  /* ── Config ── */
+  const firebaseConfig = {
+    apiKey:            "AIzaSyCpo1x_nwAY9Qj2jfESRt_xZZYiJSvzv_0",
+    authDomain:        "mh-graphic.firebaseapp.com",
+    databaseURL:       "https://mh-graphic-default-rtdb.firebaseio.com",
+    projectId:         "mh-graphic",
+    storageBucket:     "mh-graphic.firebasestorage.app",
+    messagingSenderId: "679135870858",
+    appId:             "1:679135870858:web:027c469aca918dfd0b5273",
+    measurementId:     "G-Z20979CS39"
+  };
+
+  const app    = initializeApp(firebaseConfig);
+  const auth   = getAuth(app);
+  const rtdb   = getDatabase(app);
+  const fsdb   = getFirestore(app);
+  const stor   = getStorage(app);
+  const gp     = new GoogleAuthProvider();
+
+  /* ────────────────────────────────────────
+     FIX: onAuthStateChanged — check if we
+     are already on login page to stop loop.
+     Only redirect when NOT already on a
+     login page (i.e., dashboard.html exists).
+     We use a flag so it only fires once.
+  ──────────────────────────────────────── */
+  let authChecked = false;
+  onAuthStateChanged(auth, user => {
+    if (authChecked) return;   // ← prevent repeated triggers
+    authChecked = true;
+    if (user) {
+      // Only redirect if dashboard.html is a real destination
+      // Safe: won't loop because dashboard.html should handle its own auth
+      const dest = "dashboard.html";
+      if (!window.location.href.includes(dest)) {
+        window.location.href = dest;
+      }
+    }
+  });
+
+  /* ── Save to RTDB + Firestore + Storage (avatar placeholder) ── */
+  async function saveUser(uid, data) {
+    // 1. Realtime Database
+    await set(dbRef(rtdb, "users/" + uid), data);
+
+    // 2. Firestore
+    await setDoc(doc(fsdb, "users", uid), data);
+
+    // 3. Firebase Storage — store a small profile JSON as file
+    try {
+      const profileRef = storRef(stor, `profiles/${uid}/profile.json`);
+      await uploadString(profileRef, JSON.stringify(data), 'raw', {
+        contentType: 'application/json'
+      });
+    } catch (e) {
+      // Storage write is non-critical; don't block login
+      console.warn("Storage write skipped:", e.message);
+    }
+  }
+
+  /* ── Toast ── */
+  function toast(msg, type = "error") {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show " + type;
+    setTimeout(() => t.classList.remove("show"), 3800);
+  }
+
+  /* ── Loading state ── */
+  function setLoad(btn, state) {
+    btn.disabled = state;
+    btn.dataset.orig = btn.dataset.orig || btn.innerHTML;
+    btn.innerHTML = state
+      ? '<span class="spinner"></span> प्रतीक्षा करें…'
+      : btn.dataset.orig;
+  }
+
+  /* ── Register ── */
+  window.doRegister = async () => {
+    const n   = document.getElementById("r-name").value.trim();
+    const e   = document.getElementById("r-email").value.trim();
+    const m   = document.getElementById("r-mobile").value.trim();
+    const w   = document.getElementById("r-whatsapp").value.trim();
+    const p   = document.getElementById("r-pass").value;
+    const btn = document.getElementById("btn-register");
+
+    if (!n || !e || !m || !w || !p) return toast("कृपया सभी fields भरें।");
+    if (m.length !== 10) return toast("Mobile Number 10 digits होना चाहिए।");
+    setLoad(btn, true);
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, e, p);
+      await saveUser(cred.user.uid, {
+        name: n, email: e, mobile: m, whatsapp: w,
+        createdAt: new Date().toISOString(),
+        uid: cred.user.uid, provider: "email",
+        role: "client"
+      });
+      toast("Account बन गया! Dashboard पर जा रहे हैं…", "success");
+      authChecked = true; // prevent onAuthStateChanged from firing again
+      setTimeout(() => window.location.href = "dashboard.html", 1400);
+    } catch (err) {
+      toast(err.message);
+      setLoad(btn, false);
+    }
+  };
+
+  /* ── Login ── */
+  window.doLogin = async () => {
+    const id  = document.getElementById("l-id").value.trim();
+    const p   = document.getElementById("l-pass").value;
+    const btn = document.getElementById("btn-login");
+
+    if (!id || !p) return toast("Email/Mobile और Password डालें।");
+    setLoad(btn, true);
+    try {
+      let em = id;
+      if (!id.includes("@")) {
+        const snap = await get(dbRef(rtdb, "users"));
+        if (snap.exists()) {
+          const match = Object.values(snap.val())
+            .find(u => u.mobile === id || u.whatsapp === id);
+          if (!match) throw new Error("यह नंबर registered नहीं है।");
+          em = match.email;
+        } else throw new Error("कोई user registered नहीं है।");
+      }
+      await signInWithEmailAndPassword(auth, em, p);
+      toast("Login सफल! Redirecting…", "success");
+      authChecked = true;
+      setTimeout(() => window.location.href = "dashboard.html", 1000);
+    } catch (err) {
+      toast(err.message);
+      setLoad(btn, false);
+    }
+  };
+
+  /* ── Google ── */
+  window.doGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, gp);
+      const u = result.user;
+      const ex = await getDoc(doc(fsdb, "users", u.uid));
+      if (!ex.exists()) {
+        await saveUser(u.uid, {
+          name: u.displayName || "", email: u.email || "",
+          mobile: "", whatsapp: "",
+          createdAt: new Date().toISOString(),
+          uid: u.uid, provider: "google",
+          photoURL: u.photoURL || "", role: "client"
+        });
+      }
+      toast("Google Login सफल!", "success");
+      authChecked = true;
+      setTimeout(() => window.location.href = "dashboard.html", 1000);
+    } catch (err) { toast(err.message); }
+  };
+
+  /* ── Forgot password ── */
+  window.doForgot = async () => {
+    const e = document.getElementById("l-id").value.trim();
+    if (!e || !e.includes("@"))
+      return toast("ऊपर Email डालें, फिर Forgot दबाएं।");
+    try {
+      await sendPasswordResetEmail(auth, e);
+      toast("Reset email भेजा गया!", "success");
+    } catch (err) { toast(err.message); }
+  };
+
+  /* ── Tab switch ── */
+  window.switchTab = tab => {
+    document.getElementById("tab-login").classList.toggle("active", tab === "login");
+    document.getElementById("tab-register").classList.toggle("active", tab === "register");
+    document.getElementById("login-form").classList.toggle("hidden", tab !== "login");
+    document.getElementById("register-form").classList.toggle("hidden", tab !== "register");
+  };
+
+  /* ── FAQ ── */
+  window.toggleFaq = id => {
+    const body = document.getElementById("faq-" + id);
+    const icon = document.getElementById("faq-icon-" + id);
+    const isOpen = body.style.maxHeight && body.style.maxHeight !== "0px";
+    document.querySelectorAll(".faq-body")
+      .forEach(el => { el.style.maxHeight = "0px"; el.style.opacity = "0"; });
+    document.querySelectorAll(".faq-icon")
+      .forEach(ic => ic.textContent = "+");
+    if (!isOpen) {
+      body.style.maxHeight = body.scrollHeight + "px";
+      body.style.opacity = "1";
+      icon.textContent = "−";
+    }
+  };
+</script>
+
+</body>
+</html>
