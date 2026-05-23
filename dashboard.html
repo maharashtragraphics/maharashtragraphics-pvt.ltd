@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maharashtra Graphic Private Limited</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --deep: #0A0A14;
+    --dark: #12121f;
+    --card-bg: #16182A;
+    --accent: #FF8C69;
+    --text: #F2EFE6;
+    --muted: #C0BBB0;
+    --border: rgba(201, 168, 76, 0.30);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  /* यहाँ आपकी नई प्रतापगढ़ वाली इमेज ऐड कर दी गई है */
+  body {
+    background-image: url('https://i.ibb.co/7dqzDQ7g/1924.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,10,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+  }
+
+  .hamburger {
+    display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 8px; border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .hamburger:hover { background: rgba(201,168,76,0.1); }
+  .hamburger span {
+    display: block; width: 28px; height: 2px;
+    background: var(--gold); border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--gold); letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .nav-actions { display: flex; align-items: center; gap: 1rem; }
+
+  .btn-login {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #000; border: none; padding: 8px 20px;
+    border-radius: 4px; font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 1px;
+  }
+  .btn-login:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201,168,76,0.4); }
+
+  /* ── SIDE DRAWER ── */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 1500; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  .drawer {
+    position: fixed; top: 0; left: -360px; width: 340px; height: 100vh;
+    background: #12121f;
+    border-right: 1px solid var(--border);
+    z-index: 2000; transition: left 0.35s cubic-bezier(.4,0,.2,1);
+    overflow-y: auto; padding: 0 0 2rem;
+  }
+  .drawer.open { left: 0; }
+
+  .drawer-header {
+    background: linear-gradient(135deg, #0A0A14 0%, #1a1a30 100%);
+    padding: 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .drawer-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold); font-size: 1.2rem;
+  }
+  .close-btn {
+    background: none; border: 1px solid var(--border); color: var(--gold);
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .close-btn:hover { background: var(--gold); color: #000; }
+
+  .user-profile {
+    margin: 1.5rem; background: linear-gradient(135deg, #1e1e35, #252540);
+    border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;
+  }
+  .user-avatar {
+    width: 70px; height: 70px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; font-weight: 700; color: #000;
+    margin: 0 auto 1rem; border: 3px solid var(--gold);
+  }
+  .user-name {
+    text-align: center; font-size: 1.2rem; font-weight: 700;
+    color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .user-role {
+    text-align: center; color: var(--muted); font-size: 0.85rem;
+    margin-bottom: 1rem; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .user-details { list-style: none; }
+  .user-details li {
+    display: flex; gap: 0.75rem; padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+  }
+  .user-details li:last-child { border-bottom: none; }
+  .user-details .label { color: var(--muted); min-width: 90px; }
+  .user-details .value { color: var(--text); }
+
+  .drawer-nav { padding: 0 1.5rem; }
+  .drawer-nav h3 { color: var(--muted); font-size: 0.75rem; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 0.75rem; }
+  .drawer-nav a {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1rem; border-radius: 8px; color: var(--text);
+    text-decoration: none; font-size: 0.95rem; font-weight: 600;
+    transition: all 0.2s; margin-bottom: 0.25rem;
+  }
+  .drawer-nav a:hover { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .drawer-nav .icon { font-size: 1.1rem; width: 24px; text-align: center; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 100px 2rem 4rem;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(10,10,20,0.4) 0%, rgba(13,13,31,0.5) 100%);
+    position: relative; text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.02) 60px),
+                      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,0.02) 60px);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    background: rgba(10, 10, 20, 0.6); border: 1px solid var(--border);
+    color: var(--gold); padding: 6px 18px; border-radius: 100px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: inline-block;
+    backdrop-filter: blur(4px);
+    animation: fadeInDown 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.1;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, #fff8e0 70%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 0.5rem;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    animation: fadeInDown 0.8s 0.1s ease both;
+  }
+
+  .hero-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem; color: #fff; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 2rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    font-weight: 600;
+    animation: fadeInDown 0.8s 0.2s ease both;
+  }
+
+  .hero-desc {
+    max-width: 700px; font-size: 1.05rem; line-height: 1.8;
+    color: #ffffff; margin-bottom: 2.5rem;
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0,0,0,1);
+    background: rgba(10, 10, 20, 0.5);
+    padding: 1.5rem; border-radius: 8px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: fadeInDown 0.8s 0.3s ease both;
+  }
+
+  .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeInDown 0.8s 0.4s ease both; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #000; padding: 14px 36px; border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; border: none; letter-spacing: 1px; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+  .btn-outline {
+    background: rgba(10, 10, 20, 0.6); color: var(--gold); padding: 14px 36px; border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; border: 1px solid var(--gold); letter-spacing: 1px; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+    backdrop-filter: blur(4px);
+  }
+  .btn-outline:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+
+  .stats {
+    display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 3rem; padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    background: rgba(10, 10, 20, 0.6);
+    padding: 1.5rem 3rem; border-radius: 12px;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 1s 0.6s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;
+    color: var(--gold); display: block;
+  }
+  .stat-label { color: #fff; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-tag::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+    max-width: 60px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 700; margin-bottom: 1rem; line-height: 1.2;
+  }
+  .section-desc { color: var(--muted); font-size: 1rem; line-height: 1.8; max-width: 600px; }
+
+  /* ── SAMPLES ── */
+  #samples { background: rgba(17, 17, 34, 0.9); }
+  .samples-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .sample-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .sample-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+    transform: scaleX(0); transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .sample-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .sample-card:hover::before { transform: scaleX(1); }
+  .sample-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .sample-type {
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .sample-title {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    font-weight: 700; margin-bottom: 0.75rem;
+  }
+  .sample-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .sample-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--gold); text-decoration: none; font-weight: 600;
+    font-size: 0.9rem; transition: gap 0.2s;
+  }
+  .sample-link:hover { gap: 0.75rem; }
+
+  /* ── 🌟 NEW AUTOMATIC PROJECT CAROUSEL (Left to Right) ── */
+  #company-projects { 
+    background: rgba(10, 10, 20, 0.95); 
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .project-carousel-wrap { 
+    position: relative; 
+    overflow: hidden; 
+    margin-top: 2.5rem; 
+    width: 100%;
+  }
+  .project-track {
+    display: flex; 
+    gap: 1.5rem;
+    width: max-content;
+    animation: scrollRightSide 15s linear infinite;
+  }
+  .project-track:hover { 
+    animation-play-state: paused; /* माउस ले जाने पर स्क्रॉलिंग रुक जाएगी */
+  }
+  
+  /* बाएँ से दाएँ (Left to Right) घूमने वाला एनिमेशन */
+  @keyframes scrollRightSide {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .company-project-card {
+    width: 280px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+  }
+  .company-project-card:hover {
+    border-color: var(--gold);
+    transform: scale(1.03);
+  }
+  .company-project-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+  .company-project-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  /* ── FAQ ── */
+  #faq { background: rgba(10, 10, 20, 0.9); }
+  .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .faq-item {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 1.5rem; cursor: pointer;
+    font-size: 1rem; font-weight: 600; gap: 1rem;
+    transition: background 0.2s;
+  }
+  .faq-q:hover { background: rgba(201,168,76,0.05); }
+  .faq-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--border); display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; color: var(--gold);
+    transition: all 0.3s; font-size: 1.1rem;
+  }
+  .faq-item.open .faq-icon { background: var(--gold); color: #000; transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+    color: var(--muted); font-size: 0.95rem; line-height: 1.8;
+    padding: 0 1.5rem;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.25rem; }
+
+  /* ── FEEDBACK ── */
+  #feedback { background: rgba(17, 17, 34, 0.9); }
+  .feedback-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem; }
+  @media(max-width:700px){ .feedback-grid { grid-template-columns: 1fr; } }
+
+  .feedback-reviews { display: flex; flex-direction: column; gap: 1rem; }
+  .review-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem;
+  }
+  .review-stars { color: var(--gold); margin-bottom: 0.5rem; font-size: 0.9rem; }
+  .review-text { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.75rem; }
+  .review-author { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+
+  .feedback-form { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
+  .feedback-form h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--gold); }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-size: 0.85rem; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem; padding: 0.75rem 1rem; transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--gold);
+  }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .form-group select option { background: var(--dark); }
+  .stars-input { display: flex; gap: 0.5rem; }
+  .stars-input span { font-size: 1.5rem; cursor: pointer; transition: transform 0.1s; color: #444; }
+  .stars-input span.active, .stars-input span:hover { color: var(--gold); transform: scale(1.2); }
+  #feedbackMsg {
+    display: none; background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold); border-radius: 8px;
+    padding: 1rem; color: var(--gold); text-align: center;
+    margin-top: 1rem; font-weight: 600;
+  }
+
+  /* ── ARTIST CARDS ── */
+  #team { background: rgba(10, 10, 20, 0.9); overflow: hidden; }
+  .carousel-wrap { position: relative; overflow: hidden; margin-top: 2.5rem; }
+  .carousel-track {
+    display: flex; gap: 1.5rem;
+    animation: scrollLeft 18s linear infinite;
+    width: max-content;
+  }
+  .carousel-track:hover { animation-play-state: paused; }
+
+  @keyframes scrollLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .artist-card {
+    width: 200px; height: 240px; flex-shrink: 0;
+    background: linear-gradient(135deg, #16182A, #1e2040);
+    border: 1px solid var(--border); border-radius: 16px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 1.5rem; text-align: center;
+    transition: all 0.3s; cursor: pointer;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+  .artist-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 20px 50px rgba(201,168,76,0.2);
+    transform: translateY(-6px) rotateY(5deg);
+  }
+  .artist-avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    margin-bottom: 1rem; display: flex; align-items: center;
+    justify-content: center; font-size: 1.8rem;
+    border: 2px solid var(--gold);
+  }
+  .artist-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .artist-role { color: var(--gold); font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .artist-type { color: var(--muted); font-size: 0.78rem; }
+  .artist-gender { position: absolute; top: 12px; right: 12px; font-size: 0.7rem;
+    background: rgba(201,168,76,0.1); border: 1px solid var(--border);
+    padding: 2px 8px; border-radius: 100px; color: var(--gold); letter-spacing: 1px; }
+
+  /* ── COMPLAINT ── */
+  #complaint { background: rgba(17, 17, 34, 0.9); }
+  .complaint-form {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2.5rem; max-width: 700px; margin-top: 2.5rem;
+  }
+  #complaintMsg {
+    display: none; background: rgba(255,107,53,0.1);
+    border: 1px solid var(--accent); border-radius: 8px;
+    padding: 1rem; color: var(--accent); text-align: center;
+    margin-top: 1rem; font-weight: 600;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: rgba(10, 10, 20, 0.9); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 2.5rem; }
+  @media(max-width:700px){ .about-grid { grid-template-columns: 1fr; } }
+  .about-img {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border);
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1a1a30, #252550);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; position: relative;
+  }
+  .about-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(201,168,76,0.1));
+  }
+  .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 1rem; }
+  .about-highlights { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .highlight { text-align: center; }
+  .highlight-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); font-weight: 700; }
+  .highlight-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── MIKE ABOUT ── */
+  #about-mike { background: rgba(17, 17, 34, 0.9); }
+  .mike-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-top: 2.5rem; }
+  @media(max-width:700px){ .mike-grid { grid-template-columns: 1fr; } }
+  .mike-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem; text-align: center;
+  }
+  .mike-avatar {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    margin: 0 auto 1rem; display: flex; align-items: center;
+    justify-content: center; font-size: 2.5rem;
+    border: 3px solid var(--gold);
+  }
+  .mike-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .mike-title { color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+  .mike-bio p { color: var(--muted); line-height: 1.9; margin-bottom: 1rem; }
+  .mike-specs { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+  .mike-spec {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 1rem; background: rgba(255,255,255,0.03);
+    border-radius: 6px; font-size: 0.9rem;
+  }
+  .mike-spec-label { color: var(--muted); }
+  .mike-spec-val { color: var(--gold); font-weight: 700; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060610;
+    border-top: 1px solid var(--border);
+  }
+  .footer-main {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 2.5rem; padding: 4rem 2rem 3rem; max-width: 1100px; margin: 0 auto;
+  }
+  @media(max-width:800px){ .footer-main { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:500px){ .footer-main { grid-template-columns: 1fr; } }
+  .footer-brand h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1rem; }
+  .footer-address { background: rgba(201,168,76,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+  .footer-address p { color: var(--muted); font-size: 0.85rem; line-height: 1.8; }
+  .footer-col h4 {
+    color: var(--text); font-size: 0.85rem; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col ul li a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 2rem; text-align: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-legal {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .footer-legal span {
+    color: var(--muted); font-size: 0.8rem; padding: 4px 12px;
+    background: rgba(255,255,255,0.03); border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+  .footer-copy { color: var(--muted); font-size: 0.85rem; line-height: 1.8; }
+  .footer-copy strong { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 4rem auto; max-width: 1100px; padding: 0 2rem;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .divider-icon { color: var(--gold); font-size: 1.2rem; }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--deep); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  .tag-badge {
+    display: inline-block; background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border); color: var(--gold);
+    padding: 4px 12px; border-radius: 100px; font-size: 0.75rem;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="hamburger" onclick="toggleDrawer()" title="Menu">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="nav-logo">Maharashtra Graphic Pvt. Ltd.</div>
+  <div class="nav-actions">
+    <button class="btn-login" id="navLoginBtn" onclick="toggleDrawer()">👤 Login / Profile</button>
+  </div>
+</nav>
+
+<div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h2>🎙️ User Profile</h2>
+    <button class="close-btn" onclick="toggleDrawer()">✕</button>
+  </div>
+  <div class="user-profile" id="loginSection">
+    <div style="text-align:center;margin-bottom:1rem;font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;">🔐 Login करें</div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label style="display:block;font-size:0.8rem;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;">Email</label>
+      <input type="email" id="loginEmail" placeholder="your@email.com" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:0.95rem;padding:0.6rem 0.9rem;outline:none;">
+    </div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label style="display:block;font-size:0.8rem;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;">Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:0.95rem;padding:0.6rem 0.9rem;outline:none;">
+    </div>
+    <div id="loginError" style="display:none;color:var(--accent);font-size:0.85rem;margin-bottom:0.75rem;text-align:center;"></div>
+    <button id="loginSubmitBtn" onclick="doLogin()" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#000;border:none;padding:0.7rem;border-radius:6px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;letter-spacing:1px;">🔓 Login</button>
+  </div>
+
+  <div class="user-profile" id="profileSection" style="display:none;">
+    <div class="user-avatar" id="drawerAvatar">U</div>
+    <div class="user-name" id="drawerName">—</div>
+    <div class="user-role" id="drawerRole">—</div>
+    <ul class="user-details">
+      <li><span class="label">📧 Email</span><span class="value" id="drawerEmail">—</span></li>
+      <li><span class="label">📱 Phone</span><span class="value" id="drawerPhone">—</span></li>
+      <li><span class="label">🆔 ID</span><span class="value" id="drawerId">—</span></li>
+      <li><span class="label">🏢 Dept.</span><span class="value" id="drawerDept">—</span></li>
+      <li><span class="label">📅 Joined</span><span class="value" id="drawerJoined">—</span></li>
+      <li><span class="label">📍 City</span><span class="value" id="drawerCity">—</span></li>
+      <li><span class="label">🎭 Projects</span><span class="value" id="drawerProjects">—</span></li>
+      <li><span class="label">⭐ Rating</span><span class="value" id="drawerRating">—</span></li>
+    </ul>
+    <button id="logoutBtn" onclick="doLogout()" style="display:none;width:100%;margin-top:1rem;background:rgba(255,100,60,0.15);color:var(--accent);border:1px solid var(--accent);padding:0.6rem;border-radius:6px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;letter-spacing:1px;">🚪 Logout</button>
+  </div>
+  <div class="drawer-nav">
+    <h3>Navigation</h3>
+    <a href="#about-mike"><span class="icon">🎙️</span> About Mike</a>
+    <a href="#company-projects"><span class="icon">📁</span> Our Projects</a>
+    <a href="#samples"><span class="icon">🎬</span> Samples</a>
+    <a href="#team"><span class="icon">👥</span> Our Artists</a>
+    <a href="#feedback"><span class="icon">💬</span> Feedback</a>
+    <a href="#faq"><span class="icon">❓</span> FAQ</a>
+    <a href="#complaint"><span class="icon">📋</span> Complaints</a>
+    <a href="#about"><span class="icon">🏢</span> About Us</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-badge">Est. 2019 · Thane, Maharashtra</div>
+  <h1>Maharashtra Graphic<br>Private Limited</h1>
+  <div class="hero-sub">Professional Voice Over & Media Production</div>
+  <p class="hero-desc">
+    महाराष्ट्र ग्राफिक प्राइवेट लिमिटेड — भारत की अग्रणी Voice Over और Media Production Company।
+    हम Audio, Video, Animation और Graphic Design में विश्वस्तरीय सेवाएं प्रदान करते हैं।
+    हमारे कुशल कलाकार हर आयु वर्ग और भाषा में उत्कृष्ट प्रदर्शन देते हैं।
+  </p>
+  <div class="hero-cta">
+    <a href="#samples" class="btn-primary">🎬 हमारे Samples देखें</a>
+    <a href="#feedback" class="btn-outline">💬 Feedback दें</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="stat-num">100000+</span><span class="stat-label">Projects</span></div>
+    <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Artists</span></div>
+    <div class="stat"><span class="stat-num">7+</span><span class="stat-label">Years</span></div>
+    <div class="stat"><span class="stat-num">150000+</span><span class="stat-label">Clients</span></div>
+  </div>
+</section>
+
+<section id="samples">
+  <div class="container">
+    <div class="section-tag">Our Work</div>
+    <h2 class="section-title">Audio & Video Samples</h2>
+    <p class="section-desc">हमारे professional Audio और Video samples सुनें और देखें। हर project में हम गुणवत्ता और रचनात्मकता का संगम करते हैं।</p>
+    <div class="samples-grid">
+      <div class="sample-card">
+        <div class="sample-icon">🎵</div>
+        <div class="sample-type">Audio Production</div>
+        <div class="sample-title">Voice Over Samples</div>
+        <div class="sample-desc">Professional Hindi, Marathi और English voice over recordings। Commercial, Documentary और E-Learning के लिए।</div>
+        <a href="audio.html" class="sample-link">🎧 Audio Samples सुनें →</a>
+      </div>
+      <div class="sample-card">
+        <div class="sample-icon">🎬</div>
+        <div class="sample-type">Video Production</div>
+        <div class="sample-title">Video Reel Samples</div>
+        <div class="sample-desc">High-quality Video productions जिसमें Corporate Films, Advertisements और Educational content शामिल है।</div>
+        <a href="video.html" class="sample-link">📺 Video Samples देखें →</a>
+      </div>
+      <div class="sample-card">
+        <div class="sample-icon">🎙️</div>
+        <div class="sample-type">Live Recording</div>
+        <div class="sample-title">Studio Sessions</div>
+        <div class="sample-desc">State-of-the-art recording studio में live sessions। Professional sound engineering और mixing के साथ।</div>
+        <a href="audio.html" class="sample-link">🎤 Studio देखें →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="company-projects">
+  <div class="container">
+    <div class="section-tag">Portfolio</div>
+    <h2 class="section-title">Our Projects (कंपनी कार्य)</h2>
+    <p class="section-desc">हमारे द्वारा सफलतापूर्वक पूरे किए गए कुछ प्रमुख प्रोजेक्ट्स की झलक यहाँ देखें।</p>
+  </div>
+  <div class="project-carousel-wrap">
+    <div class="project-track">
+      
+   
+
+      <div class="company-project-card">
+        <img src="https://i.ibb.co/7t0t1VvT/Screenshot-21-5-2026-14388-cdn-pixabay-com.jpg" alt="Project 3">
+        <div class="company-project-title">customer to team support</div>
+      </div>
+
+      <div class="company-project-card">
+        <img src="https://i.ibb.co/C5w4ZyBn/Screenshot-21-5-2026-142946-fiverr-res-cloudinary-com.jpg" alt="Project 4">
+        <div class="company-project-title">voice over artic</div><div class="employee-name">s.s. jadhav</div>
+      </div>
+
+      <div class="company-project-card">
+        <img src="https://i.ibb.co/h1C97hrR/Screenshot-21-5-2026-144310-www-acte-in.jpg" alt="Project 5">
+        <div class="company-project-title">daily Work</div>
+      </div>
+
+      <div class="company-project-card"><img src="https://i.ibb.co/9HDRRg08/madam.jpg" alt="Project 1"><div class="company-project-title">manager</div>
+    <div class="employee-name">Akansha patil</div></div>
+      
+
+      
+      <div class="company-project-card"><img src="https://i.ibb.co/ccNzz2Tx/team.jpg" alt="Project 2"><div class="company-project-title">editing team</div></div>
+      <div class="company-project-card"><img src="https://i.ibb.co/4ggsy8Lr/Screenshot-21-5-2026-142054-economictimes-indiatimes-com.jpg" alt="Project 3"><div class="company-project-title"></div></div>
+      <div class="company-project-card"><img src="https://i.ibb.co/gFg1dMYt/Screenshot-21-5-2026-142548-im-rediff-com.jpg" alt="Project 4"><div class="company-project-title">Branding & AdvertVoice Over Studioisement</div></div>
+      <div class="company-project-card"><img src="https://i.ibb.co/C5w4ZyBn/Screenshot-21-5-2026-142946-fiverr-res-cloudinary-com.jpg" alt="Project 5"><div class="company-project-title">Audio Mixing & Mastering</div></div>
+
+    </div>
+  </div>
+</section>
+<section id="team">
+  <div class="container">
+    <div class="section-tag">Our Legal Team</div>
+    <h2 class="section-title">हमारे Voice Artists</h2>
+    <p class="section-desc">हमारी talented artists team — Male और Female, Young, Adult और Child voice artists जो हर genre में माहिर हैं।</p>
+  </div>
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="artist-card">
+        <div class="artist-gender">MALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#1a6b3a,#2ea855)">🎙️</div>
+        <div class="artist-name">Arjun Patil</div>
+        <div class="artist-role">Young Voice</div>
+        <div class="artist-type">Commercial · Jingles</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">MALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#1a3a6b,#2e5ea8)">🎤</div>
+        <div class="artist-name">Rohan Desai</div>
+        <div class="artist-role">Young Voice</div>
+        <div class="artist-type">Corporate · E-Learning</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">MALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#5a1a1a,#a82e2e)">🎭</div>
+        <div class="artist-name">Suresh Naik</div>
+        <div class="artist-role">Senior Voice</div>
+        <div class="artist-type">Documentary · News</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">MALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#3a1a5a,#7e2ea8)">🌟</div>
+        <div class="artist-name">Chinmay Joshi</div>
+        <div class="artist-role">Child Voice</div>
+        <div class="artist-type">Animation · Kids Shows</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">FEMALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#6b1a3a,#c9417a)">🌸</div>
+        <div class="artist-name">Priya Kulkarni</div>
+        <div class="artist-role">Young Voice</div>
+        <div class="artist-type">Commercial · Jingles</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">FEMALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#1a5a4a,#2ea888)">🎵</div>
+        <div class="artist-name">Anjali Sharma</div>
+        <div class="artist-role">Young Voice</div>
+        <div class="artist-type">Corporate · E-Learning</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">FEMALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#5a4a1a,#a89e2e)">👑</div>
+        <div class="artist-name">Sushila Pawar</div>
+        <div class="artist-role">Senior Voice</div>
+        <div class="artist-type">Documentary · Narration</div>
+      </div>
+      <div class="artist-card">
+        <div class="artist-gender">FEMALE</div>
+        <div class="artist-avatar" style="background:linear-gradient(135deg,#1a1a5a,#2e2ea8)">✨</div>
+        <div class="artist-name">Riya Thakur</div>
+        <div class="artist-role">Child Voice</div>
+        <div class="artist-type">Animation · Kids Shows</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="container">
+    <div class="section-tag">Live Feedback</div>
+    <h2 class="section-title">आपका Feedback <span id="totalFeedbackCount" style="font-size:1rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#000;padding:3px 14px;border-radius:100px;vertical-align:middle;font-family:'Rajdhani',sans-serif;font-weight:700;">0</span></h2>
+    <p class="section-desc">हमारे clients का अनुभव और आपका valuable feedback हमें और बेहतर बनाता है।</p>
+    <div class="feedback-grid">
+      <div class="feedback-reviews">
+        <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Recent Reviews</h3>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">Maharashtra Graphic की team ने हमारे Corporate Film के लिए बेहतरीन voice over दिया। Professional और time-bound delivery।</div>
+          <div class="review-author">— Vikram Mehta, CEO, TechIndia</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">बच्चों के Animation project के लिए perfect child voice artist मिले। Quality लाजवाब थी।</div>
+          <div class="review-author">— Sunita Joshi, Director, KidsWorld</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★☆</div>
+          <div class="review-text">Documentary के लिए senior artist की voice बिल्कुल सटीक थी। Highly recommended!</div>
+          <div class="review-author">— Rahul Pawar, Producer</div>
+        </div>
+        <div id="liveReviews"></div>
+      </div>
+      <div class="feedback-form">
+        <h3>अपना Feedback दें</h3>
+        <div class="form-group">
+          <label>आपका नाम</label>
+          <input type="text" id="fbName" placeholder="Full Name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="fbEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Service Type</label>
+          <select id="fbService">
+            <option value="">Select Service</option>
+            <option>Voice Over - Male Young</option>
+            <option>Voice Over - Male Senior</option>
+            <option>Voice Over - Male Child</option>
+            <option>Voice Over - Female Young</option>
+            <option>Voice Over - Female Senior</option>
+            <option>Voice Over - Female Child</option>
+            <option>Video Production</option>
+            <option>Audio Production</option>
+            <option>Graphic Design</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="stars-input" id="starInput">
+            <span onclick="setRating(1)">★</span>
+            <span onclick="setRating(2)">★</span>
+            <span onclick="setRating(3)">★</span>
+            <span onclick="setRating(4)">★</span>
+            <span onclick="setRating(5)">★</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="fbMsg" placeholder="आपका अनुभव साझा करें..."></textarea>
+        </div>
+        <button class="btn-primary" onclick="submitFeedback()" style="width:100%">📩 Feedback Submit करें</button>
+        <div id="feedbackMsg">✅ आपका Feedback सफलतापूर्वक submit हो गया! धन्यवाद।</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="complaint">
+  <div class="container">
+    <div class="section-tag">Support</div>
+    <h2 class="section-title">Complaint दर्ज करें</h2>
+    <p class="section-desc">कोई समस्या है? हमें बताएं — हमारी team 72 घंटों में आपसे संपर्क करेगी।</p>
+    <div class="complaint-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+        <div class="form-group">
+          <label>पूरा नाम</label>
+          <input type="text" id="cpName" placeholder="Your Full Name">
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="tel" id="cpPhone" placeholder="+91 XXXXX XXXXX">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="cpEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Complaint Type</label>
+        <select id="cpType">
+          <option value="">Select Type</option>
+          <option>Service Quality Issue</option>
+          <option>Delivery Delay</option>
+          <option>Payment Dispute</option>
+          <option>Artist Behavior</option>
+          <option>Technical Issue</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Project ID (यदि हो)</label>
+        <input type="text" id="cpProjectId" placeholder="MGPL-XXXX-XXXX">
+      </div>
+      <div class="form-group">
+        <label>Complaint Details</label>
+        <textarea id="cpDetails" placeholder="अपनी complaint विस्तार से लिखें..." style="min-height:150px"></textarea>
+      </div>
+      <button class="btn-primary" onclick="submitComplaint()">📋 Complaint Submit करें</button>
+      <div id="complaintMsg">✅ आपकी complaint दर्ज हो गई है। Complaint ID: MGPL-CP-<span id="cpId"></span> — हमारी team जल्द संपर्क करेगी।</div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">अक्सर पूछे जाने वाले सवाल</h2>
+    <p class="section-desc">हमारी services के बारे में आपके common questions के जवाब।</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Maharashtra Graphic में Voice Over की process क्या है?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">आप हमसे contact करें, अपना script और requirement बताएं। हम आपको suitable artist के demos भेजेंगे। Approval के बाद recording होती है और 24-48 घंटों में final audio delivery होती है।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          कौन-कौन सी भाषाओं में Voice Over available है?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">हम Hindi, Marathi, English, Gujarati, Tamil, Telugu, Kannada और Bengali में professional voice over services प्रदान करते हैं। अन्य भाषाओं के लिए संपर्क करें।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Minimum project budget क्या है?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">हमारे packages ₹1000 से शुरू होते हैं। Project के size and complexity के अनुसार customized quotes भी available हैं। Free consultation के लिए call करें।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          क्या हम studio में recording session attend कर सकते हैं?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">हाँ, आप prior appointment के साथ हमारे Thane West studio में आ सकते हैं। Online remote recording sessions भी available हैं जो Zoom या Google Meet के माध्यम से होती हैं।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Revision policy क्या है?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">हर project में शामिल हैं। Direction change या major edits के लिए additional charges लागू हो सकते हैं।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          About the Website — यह website किस लिए है?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">यह Maharashtra Graphic Private Limited की official website है यहाँ आप हमारे artists के samples सुन सकते हैं, services book कर सकते हैं, feedback दे सकते हैं और हमारी team से सीधे जुड़ सकते हैं। <span style="color: #007bff; font-weight: bold;">Developed By nexus-tech</span><span style="color: #600202; font-weight: bold;">&copy</span> </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about-mike">
+  <div class="container">
+    <div class="section-tag">Artist Spotlight</div>
+    <h2 class="section-title">About Mike — Head Sound Engineer</h2>
+    <div class="mike-grid">
+      <div class="mike-card">
+        <div class="mike-avatar">🎙️</div>
+        <div class="mike-name">Mike Fernandes</div>
+        <div class="mike-title">Head Sound Engineer & Voice Director</div>
+        <div class="mike-specs">
+          <div class="mike-spec"><span class="mike-spec-label">Experience</span><span class="mike-spec-val">18+ Years</span></div>
+          <div class="mike-spec"><span class="mike-spec-label">Projects</span><span class="mike-spec-val">100000+</span></div>
+          <div class="mike-spec"><span class="mike-spec-label">Languages</span><span class="mike-spec-val">5+</span></div>
+          <div class="mike-spec"><span class="mike-spec-label">Speciality</span><span class="mike-spec-val">Sound Design</span></div>
+        </div>
+      </div>
+      <div class="mike-bio">
+        <p>Mike Fernandes Maharashtra Graphic Private Limited के Head Sound Engineer और Voice Director हैं। वे पिछले 18 वर्षों से भारतीय media industry में अपनी अमूल्य सेवाएं दे रहे हैं।</p>
+        <p>Mike ने Mumbai Film Industry, Television Channels और Corporate World में 1000 से अधिक projects complete किए हैं। उनकी expertise में Sound Design, Voice Direction, Audio Mixing और Post-Production शामिल है।</p>
+        <p>वे Artists को professionally train करते हैं और हर recording session में technical perfection सुनिश्चित करते हैं। Mike की leadership में Maharashtra Graphic ने अनेक National Awards जीते हैं।</p>
+        <p>Mike Thane, Maharashtra के निवासी हैं और company के founding members में से एक हैं। उनका vision है कि भारतीय Voice Over industry को Global standards तक पहुँचाया जाए।</p>
+        <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap">
+          <span class="tag-badge">🎵 Sound Design</span>
+          <span class="tag-badge">🎙️ Voice Direction</span>
+          <span class="tag-badge">🎬 Post Production</span>
+          <span class="tag-badge">🏆 Award Winner</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-tag">Company</div>
+    <h2 class="section-title">Maharashtra Graphic के बारे में</h2>
+    <div class="about-grid">
+      <div class="about-img">🏢</div>
+      <div class="about-text">
+        <p>Maharashtra Graphic Private Limited की स्थापना 2005 में Thane, Maharashtra में हुई थी। हम भारत की अग्रणी Voice Over और Media Production Company हैं जो Audio, Video, Animation और Graphic Design में comprehensive services प्रदान करती है।</p>
+        <p>पिछले 18+ वर्षों में हमने 500 से अधिक satisfied clients के साथ काम किया है। हमारी team में 20+ professional artists हैं जो हर age group और language में माहिर हैं।</p>
+        <p>हमारा state-of-the-art studio Thane West में स्थित है जहाँ सबसे advanced recording equipment available है। हम quality, creativity and professionalism को सर्वोच्च प्राथमिकता देते हैं।</p>
+        <div class="about-highlights">
+          <div class="highlight"><div class="highlight-num">2019</div><div class="highlight-label">Founded</div></div>
+          <div class="highlight"><div class="highlight-num">100000+</div><div class="highlight-label">Projects</div></div>
+          <div class="highlight"><div class="highlight-num">5+</div><div class="highlight-label">Languages</div></div>
+          <div class="highlight"><div class="highlight-num">8+</div><div class="highlight-label">Years</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <h3>Maharashtra Graphic Pvt. Ltd.</h3>
+      <p>भारत की अग्रणी Voice Over और Media Production Company। Professional, Creative, और Reliable services के साथ आपके हर project को सफल बनाना हमारा लक्ष्य है।</p>
+      <div class="footer-address">
+        <p>📍 <strong style="color:var(--gold)">ऑफिस पत्ता :</strong><br>
+        Maharashtra Graphic Private Limited<br>
+        Shop no 5 - 11, Ground Floor, behind Rutu Park, opp. Hanuman Mandir, Panchsheel Nagar, Thane West, Thane, Maharashtra 400601, India<br>
+        Thane West, Thane — 400 601<br>
+        Maharashtra, India</p>
+        <p style="margin-top:0.75rem">📞 +91 7219715036 Only Whatsapp<br>
+    
+        📧 maharastragraphics.pvt.ltd</p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Voice Over</a></li>
+        <li><a href="#">Video Production</a></li>
+        <li><a href="#">Audio Production</a></li>
+        <li><a href="#">Graphic Design</a></li>
+        <li><a href="#">Animation</a></li>
+        <li><a href="#">Jingle Production</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#samples">Samples</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#complaint">Complaints</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Copyright Policy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#">Artist Agreement</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--border);padding:2rem;max-width:1100px;margin:0 auto">
+    <div class="footer-legal">
+      
+      <span>📅 Incorporated: 15 March 2019</span>
+      <span>🏢 ROC: main branch Mumbai</span>
+      
+      
+    </div>
+    <div class="footer-copy">
+      <p>© 2019–2026 <strong>Maharashtra Graphic Private Limited</strong>. All Rights Reserved.</p><p><span style="color: #007bff; font-weight: bold;">Developed by nexus-tech</span> | <span style="color: #ff0000; font-weight: bold;">contact as 9049321230</span></p>
+      <p style="margin-top:0.5rem;font-size:0.8rem">
+        इस website का सभी content (Audio, Video, Images, Text) Maharashtra Graphic Private Limited का exclusive intellectual property है।
+        बिना written permission के किसी भी content का commercial या personal उपयोग strictly prohibited है।
+        Company को भारतीय Companies Act, 2019 के तहत registered किया गया है।
+        सभी disputes के लिए jurisdiction Thane, Maharashtra Courts होगी।
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  // ── FIREBASE INIT ──
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpo1x_nwAY9Qj2jfESRt_xZZYiJSvzv_0",
+    authDomain: "mh-graphic.firebaseapp.com",
+    databaseURL: "https://mh-graphic-default-rtdb.firebaseio.com",
+    projectId: "mh-graphic",
+    storageBucket: "mh-graphic.firebasestorage.app",
+    messagingSenderId: "679135870858",
+    appId: "1:679135870858:web:027c469aca918dfd0b5273",
+    measurementId: "G-Z20979CS39"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const auth = getAuth(app);
+
+  // ── DRAWER TOGGLE ──
+  window.toggleDrawer = function() {
+    document.getElementById('drawer').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  };
+
+  // ── FAQ ──
+  window.toggleFaq = function(el) {
+    const item = el.parentElement;
+    document.querySelectorAll('.faq-item').forEach(i => { if(i !== item) i.classList.remove('open'); });
+    item.classList.toggle('open');
+  };
+
+  // ── STARS RATING ──
+  window._fbRating = 0;
+  window.setRating = function(n) {
+    window._fbRating = n;
+    document.querySelectorAll('#starInput span').forEach((s, i) => s.classList.toggle('active', i < n));
+  };
+
+  // ── LIVE FEEDBACK from Firestore ──
+  const fbQ = query(collection(db, "feedback"), orderBy("timestamp", "desc"));
+  onSnapshot(fbQ, (snapshot) => {
+    const liveDiv = document.getElementById('liveReviews');
+    if (!liveDiv) return;
+    liveDiv.innerHTML = '';
+    snapshot.forEach(docSnap => {
+      const d = docSnap.data();
+      const stars = '★'.repeat(d.rating || 5) + '☆'.repeat(5 - (d.rating || 5));
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.style.borderLeft = '3px solid var(--gold)';
+      card.innerHTML = `<div class="review-stars">${stars}</div>
+        <div class="review-text">${d.message || ''}</div>
+        <div class="review-author">— ${d.name} (${d.service || 'General'})</div>`;
+      liveDiv.appendChild(card);
+    });
+    const totalEl = document.getElementById('totalFeedbackCount');
+    if (totalEl) totalEl.textContent = snapshot.size;
+  });
+
+  // ── SUBMIT FEEDBACK → Firestore "feedback" collection ──
+  window.submitFeedback = async function() {
+    const name    = document.getElementById('fbName').value.trim();
+    const email   = document.getElementById('fbEmail').value.trim();
+    const msg     = document.getElementById('fbMsg').value.trim();
+    const service = document.getElementById('fbService').value || 'General';
+    const ratingVal = window._fbRating || 0;
+    if (!name || !msg || !ratingVal) {
+      alert('कृपया सभी fields भरें और rating दें।'); return;
+    }
+    const btn = document.querySelector('#feedback .btn-primary');
+    const orig = btn.textContent;
+    btn.textContent = '⏳ Saving...'; btn.disabled = true;
+    try {
+      await addDoc(collection(db, "feedback"), {
+        name, email, message: msg, service, rating: ratingVal,
+        timestamp: serverTimestamp()
+      });
+      document.getElementById('feedbackMsg').style.display = 'block';
+      document.getElementById('fbName').value = '';
+      document.getElementById('fbEmail').value = '';
+      document.getElementById('fbMsg').value = '';
+      document.getElementById('fbService').value = '';
+      window.setRating(0);
+      setTimeout(() => document.getElementById('feedbackMsg').style.display = 'none', 5000);
+    } catch(e) { alert('Firebase Error: ' + e.message); }
+    btn.textContent = orig; btn.disabled = false;
+  };
+
+  // ── SUBMIT COMPLAINT → Firestore "complaint_box" collection ──
+  window.submitComplaint = async function() {
+    const name      = document.getElementById('cpName').value.trim();
+    const details   = document.getElementById('cpDetails').value.trim();
+    if (!name || !details) {
+      alert('कृपया अपना नाम और complaint details भरें।'); return;
+    }
+    const btn = document.querySelector('#complaint .btn-primary');
+    const orig = btn.textContent;
+    btn.textContent = '⏳ Saving...'; btn.disabled = true;
+    const id = Math.floor(Math.random() * 90000) + 10000;
+    try {
+      await addDoc(collection(db, "complaint_box"), {
+        name,
+        phone:     document.getElementById('cpPhone').value.trim(),
+        email:     document.getElementById('cpEmail').value.trim(),
+        details,
+        type:      document.getElementById('cpType').value,
+        projectId: document.getElementById('cpProjectId').value.trim(),
+        complaintId: 'MGPL-CP-' + id,
+        status: 'pending',
+        timestamp: serverTimestamp()
+      });
+      document.getElementById('cpId').textContent = id;
+      document.getElementById('complaintMsg').style.display = 'block';
+      document.getElementById('cpName').value = '';
+      document.getElementById('cpPhone').value = '';
+      document.getElementById('cpEmail').value = '';
+      document.getElementById('cpDetails').value = '';
+      document.getElementById('cpProjectId').value = '';
+      document.getElementById('cpType').value = '';
+    } catch(e) { alert('Firebase Error: ' + e.message); }
+    btn.textContent = orig; btn.disabled = false;
+  };
+
+  // ── AUTH STATE ──
+  onAuthStateChanged(auth, async (user) => {
+    const navBtn = document.getElementById('navLoginBtn');
+    if (user) {
+      let profile = { name: user.displayName || user.email, email: user.email, role:'Member', phone:'', dept:'', joined:'', city:'', projects:'', rating:'' };
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (snap.exists()) profile = { ...profile, ...snap.data() };
+      } catch(e) {}
+      document.getElementById('drawerAvatar').textContent = (profile.name || 'U')[0].toUpperCase();
+      document.getElementById('drawerName').textContent    = profile.name  || user.email;
+      document.getElementById('drawerRole').textContent    = profile.role  || 'Member';
+      document.getElementById('drawerEmail').textContent   = profile.email || user.email;
+      document.getElementById('drawerPhone').textContent   = profile.phone || '—';
+      document.getElementById('drawerId').textContent      = profile.employeeId || user.uid.slice(0,8).toUpperCase();
+      document.getElementById('drawerDept').textContent    = profile.dept   || '—';
+      document.getElementById('drawerJoined').textContent  = profile.joined || '—';
+      document.getElementById('drawerCity').textContent    = profile.city   || '—';
+      document.getElementById('drawerProjects').textContent = profile.projects || '—';
+      document.getElementById('drawerRating').textContent  = profile.rating || '—';
+      document.getElementById('loginSection').style.display   = 'none';
+      document.getElementById('profileSection').style.display = 'block';
+      document.getElementById('logoutBtn').style.display      = 'block';
+      if (navBtn) navBtn.textContent = '👤 ' + (profile.name || 'Profile').split(' ')[0];
+    } else {
+      document.getElementById('loginSection').style.display   = 'block';
+      document.getElementById('profileSection').style.display = 'none';
+      document.getElementById('logoutBtn').style.display      = 'none';
+      if (navBtn) navBtn.textContent = '👤 Login / Profile';
+    }
+  });
+
+  // ── LOGIN ──
+  window.doLogin = async function() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass  = document.getElementById('loginPass').value;
+    if (!email || !pass) { alert('Email और Password डालें।'); return; }
+    const btn = document.getElementById('loginSubmitBtn');
+    btn.textContent = '⏳ Logging in...'; btn.disabled = true;
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      document.getElementById('loginError').style.display = 'none';
+    } catch(e) {
+      const errEl = document.getElementById('loginError');
+      errEl.style.display = 'block';
+      errEl.textContent = '❌ गलत Email या Password। फिर कोशिश करें।';
+    }
+    btn.textContent = '🔓 Login'; btn.disabled = false;
+  };
+
+  // ── LOGOUT ──
+  window.doLogout = async function() {
+    await signOut(auth);
+  };
+
+  // Enter key on login fields
+  document.addEventListener('DOMContentLoaded', () => {
+    ['loginEmail','loginPass'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('keydown', e => { if(e.key==='Enter') window.doLogin(); });
+    });
+  });
+</script>
+<style>
+  /* 1. रोलिंग बोर्ड के आइकॉन का साइज बड़ा करने के लिए */
+  .rolling-board-icon, 
+  .marquee-box img, 
+  [class*="icon"] { 
+    width: 60px !important;       /* अपनी पसंद के हिसाब से 60px को बढ़ा या घटा सकते हैं */
+    height: 60px !important;      /* चौड़ाई और ऊंचाई को बराबर रखें */
+    border-radius: 50% !important; /* फोटो को गोल (Circle) शेप देने के लिए */
+    object-fit: cover !important;  /* फोटो स्ट्रेच (खिंचेगी) नहीं होगी */
+  }
+</style>
+
+<script>
+  // 2. प्रोजेक्ट वाली फोटो को आइकॉन में ऑटोमैटिक डालने का फंक्शन
+  window.addEventListener('DOMContentLoaded', (event) => {
+    // यहाँ अपनी प्रोजेक्ट वाली फोटो का सही नाम/पाथ (Path) लिखें
+    const projectPhotoUrl = 'images/project-photo.jpg'; 
+
+    // यह लाइन आपके रोलिंग बोर्ड के आइकॉन को ढूंढेगी और उसमें फोटो डाल देगी
+    const teamIcons = document.querySelectorAll('.rolling-board-icon, .marquee-box img');
+    
+    teamIcons.forEach(icon => {
+      if(icon.tagName === 'IMG') {
+        icon.src = projectPhotoUrl;
+      } else {
+        icon.style.backgroundImage = `url('${projectPhotoUrl}')`;
+        icon.style.backgroundSize = 'cover';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
