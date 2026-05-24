@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Samples — Maharashtra Graphic Pvt. Ltd.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#C9A84C;--gold2:#E8C96A;--deep:#0A0A14;--card:#16182A;
+    --border:rgba(201,168,76,0.25);--muted:#8A8577;--text:#E8E4D9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--deep);color:var(--text);font-family:'Rajdhani',sans-serif;
+    min-height:100vh;padding:2.5rem 2rem;
+    background-image:radial-gradient(ellipse 60% 40% at 80% 10%,rgba(201,168,76,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 10% 80%,rgba(201,168,76,0.05) 0%,transparent 50%);}
+  .back{display:inline-flex;align-items:center;gap:0.5rem;color:var(--gold);text-decoration:none;
+    font-weight:600;font-size:0.9rem;letter-spacing:1px;margin-bottom:2rem;opacity:0.8;transition:opacity 0.2s;}
+  .back:hover{opacity:1;}
+  .brand-tag{display:inline-block;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;
+    color:var(--gold);border:1px solid var(--border);padding:0.3rem 0.8rem;border-radius:20px;margin-bottom:1rem;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:var(--gold);margin-bottom:0.5rem;}
+  .subtitle{color:var(--muted);font-size:1rem;line-height:1.7;margin-bottom:2.5rem;}
+
+  /* Section */
+  .section{margin-bottom:3rem;}
+  .section-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+  .section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+  .section-title{
+    font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);
+    white-space:nowrap;display:flex;align-items:center;gap:0.6rem;
+  }
+  .section-count{
+    font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+    background:rgba(201,168,76,0.12);border:1px solid var(--border);
+    color:var(--gold);padding:0.2rem 0.7rem;border-radius:20px;
+    font-family:'Rajdhani',sans-serif;
+  }
+
+  /* Grid */
+  .audio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+
+  /* Card */
+  .audio-card{background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:1.5rem;transition:border-color 0.3s,transform 0.2s,box-shadow 0.3s;position:relative;overflow:hidden;}
+  .audio-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+  .audio-card:hover{border-color:rgba(201,168,76,0.5);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.4);}
+  .audio-card:hover::before{opacity:1;}
+  .audio-card.playing{border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,168,76,0.2),0 8px 30px rgba(0,0,0,0.5);}
+  .audio-card.playing::before{opacity:1;}
+
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.8rem;}
+  .lang-badge{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;
+    padding:0.2rem 0.6rem;border-radius:4px;font-weight:700;}
+  .lang-english{background:rgba(100,149,237,0.15);color:#6495ED;border:1px solid rgba(100,149,237,0.3);}
+  .lang-marathi{background:rgba(255,140,0,0.12);color:#FFA040;border:1px solid rgba(255,140,0,0.25);}
+  .lang-hindi{background:rgba(60,179,113,0.12);color:#3CB371;border:1px solid rgba(60,179,113,0.25);}
+  .sample-num{font-family:'Playfair Display',serif;font-size:1.8rem;
+    color:rgba(201,168,76,0.15);line-height:1;font-weight:900;}
+  .audio-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+    margin-bottom:0.3rem;color:var(--text);}
+  .audio-desc{color:var(--muted);font-size:0.83rem;line-height:1.6;margin-bottom:1.2rem;}
+
+  /* Player */
+  .audio-player{background:rgba(0,0,0,0.3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:1rem;}
+  .player-top{display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem;}
+  .play-btn{width:44px;height:44px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    border:none;cursor:pointer;font-size:1rem;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform 0.2s,box-shadow 0.2s;color:#0A0A14;font-weight:bold;
+    box-shadow:0 4px 15px rgba(201,168,76,0.3);}
+  .play-btn:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(201,168,76,0.5);}
+  .track-info{flex:1;min-width:0;}
+  .track-name{font-size:0.82rem;font-weight:600;margin-bottom:0.2rem;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .track-meta{color:var(--muted);font-size:0.7rem;}
+
+  /* Waveform */
+  .waveform{display:flex;align-items:center;gap:2px;height:30px;}
+  .wave-bar{width:3px;border-radius:2px;background:var(--gold);opacity:0.15;height:4px;transition:opacity 0.4s;}
+  .audio-card.playing .wave-bar{opacity:0.85;animation:wv 0.6s ease-in-out infinite alternate;}
+  .audio-card.playing .wave-bar:nth-child(3n){animation-duration:0.9s;}
+  .audio-card.playing .wave-bar:nth-child(3n+1){animation-duration:0.7s;animation-direction:alternate-reverse;}
+  @keyframes wv{from{height:3px}to{height:24px}}
+
+  /* Progress */
+  .progress-wrap{display:flex;align-items:center;gap:0.7rem;}
+  .progress-bar{flex:1;height:5px;background:rgba(201,168,76,0.12);border-radius:3px;cursor:pointer;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2));
+    border-radius:3px;pointer-events:none;transition:width 0.1s linear;}
+  .time-display{color:var(--muted);font-size:0.7rem;min-width:76px;text-align:right;white-space:nowrap;}
+
+  /* Note */
+  .note{background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:12px;
+    padding:1.5rem;color:var(--muted);font-size:0.9rem;line-height:1.8;margin-top:1rem;}
+  .note strong{color:var(--gold);}
+
+  /* Now Playing */
+  .now-playing{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,20,0.96);
+    border-top:1px solid var(--border);backdrop-filter:blur(12px);
+    padding:0.8rem 2rem;display:none;align-items:center;gap:1rem;z-index:100;}
+  .now-playing.visible{display:flex;}
+  .np-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.5s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+  .np-text{font-size:0.85rem;color:var(--text);}
+  .np-title{color:var(--gold);font-weight:600;}
+  .np-stop{margin-left:auto;background:transparent;border:1px solid var(--border);
+    color:var(--muted);padding:0.3rem 0.8rem;border-radius:6px;
+    cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:0.8rem;transition:all 0.2s;}
+  .np-stop:hover{border-color:var(--gold);color:var(--gold);}
+
+  @media(max-width:600px){
+    body{padding:1.5rem 1rem;}
+    .audio-grid{grid-template-columns:1fr;}
+    .now-playing{padding:0.8rem 1rem;}
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back">← Back to Main Site</a>
+<div class="brand-tag">Maharashtra Graphic Pvt. Ltd.</div>
+<h1>🎵 Audio Samples</h1>
+<p class="subtitle">Professional Voice Over &amp; Audio Production — 21 Demo Samples</p>
+
+<!-- ENGLISH SECTION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">🇬🇧 English Samples <span class="section-count">2 Samples</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="audio-grid" id="grid-english"></div>
+</div>
+
+<!-- MARATHI SECTION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">🟠 Marathi Samples <span class="section-count">17 Samples</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="audio-grid" id="grid-marathi"></div>
+</div>
+
+<!-- HINDI SECTION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">🟢 Hindi Samples <span class="section-count">2 Samples</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="audio-grid" id="grid-hindi"></div>
+</div>
+
+<div class="note">
+  <strong>📌 Note:</strong> Ye sab Demo Audio Samples hain. Play button dabayen aur sunein.<br>
+  Full project, custom voice over, ya kisi bhi audio production ke liye<br>• Audio Designer & Voice Tone Editor – Ranjan Kumar Sir
+
+कोशिश सिर्फ इतनी है कि हर ऑडियो का आवाज, फील और स्टाइल सबसे अलग और आकर्षक बने… ताकि सुनते ही सामने वाले को प्रोफेशनल एडिटिंग की क्वालिटी महसूस हो जाए  <br>
+  <strong>📞 +91 7219715036 (WhatsApp Only)</strong> par contact karein.   <span style="color: #007bff; font-weight: bold;">Developed By ZEVRON-tech </span>
+</div>
+
+<div class="now-playing" id="nowPlaying">
+  <div class="np-dot"></div>
+  <div class="np-text">Ab chal raha hai: <span class="np-title" id="npTitle">—</span></div>
+  <button class="np-stop" id="npStop">■ Rokein</button>
+</div>
+
+<script>
+const tracks = [
+  // ── ENGLISH (2) ──────────────────────────────────────────────────────
+  { num:"01", lang:"english", title:"English Voice Over — Sample 1", desc:"Professional English voice over sample. Clear diction, ideal for corporate & digital ads.", src:"S1.mpeg" },
+  { num:"02", lang:"english", title:"English Voice Over — Sample 2", desc:"Authoritative English narration sample. Perfect for documentaries & brand films.",          src:"S2.mpeg" },
+
+  // ── MARATHI (17) ─────────────────────────────────────────────────────
+  { num:"03", lang:"marathi", title:"Marathi Voice Over — Sample 1",  desc:"Pure Marathi voice over. Ideal for Maharashtra regional campaigns.",              src:"S3.mpeg"  },
+  { num:"04", lang:"marathi", title:"Marathi Voice Over — Sample 2",  desc:"Warm Marathi tone, suitable for government & public service announcements.",      src:"S4.mpeg"  },
+  { num:"05", lang:"marathi", title:"Marathi Voice Over — Sample 3",  desc:"Energetic Marathi voice, great for radio spots & FM campaigns.",                  src:"S5.mpeg"  },
+  { num:"06", lang:"marathi", title:"Marathi Voice Over — Sample 4",  desc:"Soft feminine Marathi voice, perfect for health & beauty brands.",                src:"S6.mpeg"  },
+  { num:"07", lang:"marathi", title:"Marathi Voice Over — Sample 5",  desc:"Deep male Marathi narration, ideal for corporate films.",                         src:"S7.mpeg"  },
+  { num:"08", lang:"marathi", title:"Marathi Voice Over — Sample 6",  desc:"Festive Marathi tone for Diwali, Ganpati & seasonal campaigns.",                  src:"S8.mpeg"  },
+  { num:"09", lang:"marathi", title:"Marathi Voice Over — Sample 7",  desc:"Calm documentary style Marathi narration for explainer videos.",                  src:"S9.mpeg"  },
+  { num:"10", lang:"marathi", title:"Marathi Voice Over — Sample 8",  desc:"High energy Marathi announcement, great for events & launches.",                  src:"S10.mpeg" },
+  { num:"11", lang:"marathi", title:"Marathi Voice Over — Sample 9",  desc:"Storytelling style Marathi voice, ideal for brand story videos.",                 src:"S11.mpeg" },
+  { num:"12", lang:"marathi", title:"Marathi Voice Over — Sample 10", desc:"Neutral professional Marathi voice for educational content.",                     src:"S12.mpeg" },
+  { num:"13", lang:"marathi", title:"Marathi Voice Over — Sample 11", desc:"Conversational Marathi tone, suitable for social media videos.",                  src:"S13.mpeg" },
+  { num:"14", lang:"marathi", title:"Marathi Voice Over — Sample 12", desc:"Traditional Marathi style, ideal for cultural & heritage projects.",              src:"S14.mpeg" },
+  { num:"15", lang:"marathi", title:"Marathi Voice Over — Sample 13", desc:"Young dynamic Marathi voice for youth-targeted campaigns.",                       src:"S15.mpeg" },
+  { num:"16", lang:"marathi", title:"Marathi Voice Over — Sample 14", desc:"Mature authoritative Marathi voice for government & official use.",               src:"S16.mpeg" },
+  { num:"17", lang:"marathi", title:"Marathi Voice Over — Sample 15", desc:"Melodious Marathi voice suitable for jingles & audio branding.",                  src:"S17.mpeg" },
+  { num:"18", lang:"marathi", title:"Marathi Voice Over — Sample 16", desc:"Radio-friendly Marathi voice, high clarity & impact.",                            src:"S18.mpeg" },
+  { num:"19", lang:"marathi", title:"Marathi Voice Over — Sample 17", desc:"Emotional storytelling Marathi tone for NGO & social campaigns.",                 src:"S19.mpeg" },
+
+  // ── HINDI (2) ────────────────────────────────────────────────────────
+  { num:"20", lang:"hindi",   title:"Hindi Voice Over — Sample 1",   desc:"Professional Hindi voice over. Bhav poorn awaaz, ideal for TV & digital ads.",   src:"S20.mpeg" },
+  { num:"21", lang:"hindi",   title:"Hindi Voice Over — Sample 2",   desc:"Deep male Hindi narration, perfect for corporate & documentary films.",           src:"S21.mpeg" },
+];
+
+// ── Player State ──────────────────────────────────────────────────────────────
+let currentAudio=null, currentCard=null;
+
+function fmt(s){
+  if(!s||isNaN(s))return"0:00";
+  s=Math.floor(s);return Math.floor(s/60)+":"+(s%60<10?"0":"")+s%60;
+}
+
+function stopAll(){
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;}
+  if(currentCard){
+    currentCard.querySelector(".play-btn").innerHTML="&#9654;";
+    currentCard.classList.remove("playing");
+    currentCard.querySelector(".progress-fill").style.width="0%";
+  }
+  document.getElementById("nowPlaying").classList.remove("visible");
+  currentAudio=null;currentCard=null;
+}
+
+// ── Build Cards ───────────────────────────────────────────────────────────────
+const heights=[4,8,14,20,24,26,22,18,12,8,6,10,16,22,26,22,16,8];
+
+tracks.forEach(function(t){
+  const card=document.createElement("div");
+  card.className="audio-card";
+
+  let bars="";
+  for(let i=0;i<18;i++)
+    bars+=`<div class="wave-bar" style="height:${heights[i]}px;animation-delay:${(i*0.07).toFixed(2)}s;animation-duration:${(0.45+i%4*0.18).toFixed(2)}s"></div>`;
+
+  const badgeClass="lang-"+t.lang;
+  const langLabel=t.lang==="english"?"English":t.lang==="marathi"?"Marathi":"Hindi";
+
+  card.innerHTML=`
+    <div class="card-top">
+      <div class="lang-badge ${badgeClass}">${langLabel}</div>
+      <div class="sample-num">${t.num}</div>
+    </div>
+    <div class="audio-title">${t.title}</div>
+    <div class="audio-desc">${t.desc}</div>
+    <div class="audio-player">
+      <div class="player-top">
+        <button class="play-btn">&#9654;</button>
+        <div class="track-info">
+          <div class="track-name">${t.src}</div>
+          <div class="track-meta">Loading…</div>
+        </div>
+        <div class="waveform">${bars}</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="time-display">0:00 / 0:00</div>
+      </div>
+    </div>`;
+
+  const audio=new Audio(t.src);
+  audio.preload="metadata";
+  const playBtn=card.querySelector(".play-btn");
+  const fill=card.querySelector(".progress-fill");
+  const timeDis=card.querySelector(".time-display");
+  const metaEl=card.querySelector(".track-meta");
+  const progBar=card.querySelector(".progress-bar");
+
+  audio.addEventListener("loadedmetadata",function(){
+    metaEl.textContent="Duration: "+fmt(audio.duration);
+    timeDis.textContent="0:00 / "+fmt(audio.duration);
+  });
+  audio.addEventListener("timeupdate",function(){
+    const p=audio.duration?audio.currentTime/audio.duration*100:0;
+    fill.style.width=p+"%";
+    timeDis.textContent=fmt(audio.currentTime)+" / "+fmt(audio.duration);
+  });
+  audio.addEventListener("ended",function(){
+    playBtn.innerHTML="&#9654;";card.classList.remove("playing");
+    fill.style.width="0%";
+    document.getElementById("nowPlaying").classList.remove("visible");
+  });
+
+  playBtn.addEventListener("click",function(){
+    if(currentAudio&&currentAudio!==audio){stopAll();}
+    if(audio.paused){
+      audio.play();playBtn.innerHTML="&#9646;&#9646;";card.classList.add("playing");
+      currentAudio=audio;currentCard=card;
+      document.getElementById("npTitle").textContent=t.title;
+      document.getElementById("nowPlaying").classList.add("visible");
+    } else {
+      audio.pause();playBtn.innerHTML="&#9654;";card.classList.remove("playing");
+      document.getElementById("nowPlaying").classList.remove("visible");
+    }
+  });
+
+  progBar.addEventListener("click",function(e){
+    if(!audio.duration)return;
+    const r=progBar.getBoundingClientRect();
+    audio.currentTime=(e.clientX-r.left)/r.width*audio.duration;
+  });
+
+  const gridId="grid-"+t.lang;
+  document.getElementById(gridId).appendChild(card);
+});
+
+document.getElementById("npStop").addEventListener("click",stopAll);
+</script>
+</body>
+</html>
